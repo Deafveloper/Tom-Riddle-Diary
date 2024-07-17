@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tom Riddle's Diary</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="book" id="book">
-            <div class="cover" id="cover">
-                <h1>Tom Riddle's Diary</h1>
-            </div>
-            <div class="content" id="content">
-                <div id="chatbox">
-                    <div id="messages"></div>
-                </div>
-                <input type="text" id="user_input" placeholder="Type your message here...">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
+    <div class="diary">
+        <h1>Tom Riddle's Diary</h1>
+        <div id="chat-window"></div>
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Type your message here...">
+            <button type="submit">Send</button>
+        </form>
     </div>
-    <script src="static/script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
+

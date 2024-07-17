@@ -1,18 +1,17 @@
-from diary import TomRiddleDiary
+from flask import Flask, render_template, request, jsonify
+from diary import get_response
 
-def main():
-    diary = TomRiddleDiary()
-    print("Welcome to Tom Riddle's Diary! (Type 'exit' to quit)")
-    
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() == 'exit':
-            print("Goodbye!")
-            break
-        
-        diary.add_entry(user_input)
-        response = diary.generate_response(user_input)
-        print(f"Tom Riddle: {response}")
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    main()
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_input = request.json.get('message')
+    response = get_response(user_input)
+    return jsonify({'response': response})
+
+if __name__ == '__main__':
+    app.run(debug=True)
