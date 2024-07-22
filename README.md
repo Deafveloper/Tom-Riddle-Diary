@@ -4,8 +4,10 @@
 
 ![Evil Laugh](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2M2ZnFzYW9jbDdxa29mdnB4bmM4a25uNXc1Zmg4aGozenZjOHBqdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o72FfM5HJydzafgUE/giphy.gif)
 
-Ever wondered what it would be like to have a chat with young Tom Riddle? Well, wonder no more! This repository houses an interactive diary that lets you converse with a preserved piece of Voldemort's soul. 
-Scary? Maybe. Cool? Definitely!
+Ever wondered what it would be like to have a chat with young Tom Riddle?  
+Well, wonder no more! This repository houses an interactive diary that lets you converse with a preserved piece of Voldemort's soul.   
+Scary? Maybe.  
+Cool? Definitely!
 
 ## Features:
 - **Talk to Tom:** Type your deepest secrets (or just say hi) and receive eerie responses from the Dark Lord in training.
