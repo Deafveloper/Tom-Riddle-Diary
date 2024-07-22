@@ -20,5 +20,7 @@ Cool? Definitely!
 ![Coming Soon](https://media.giphy.com/media/p1bCWIZsQUWzU2vp9k/giphy.gif?cid=ecf05e474e4277ft97kuekqgwy7ahcjchnsi54ncdjg44j6m&ep=v1_gifs_search&rid=giphy.gif&ct=g)
 
 ## Contributions:
-Have ideas to make this diary even more enchanting? Pull requests and suggestions are always welcome. Just be careful not to awaken any hidden curses!
+Have ideas to make this diary even more enchanting?  
+Pull requests and suggestions are always welcome.  
+Just be careful not to awaken any hidden curses!
 
