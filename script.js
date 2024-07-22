@@ -20,7 +20,7 @@ function addMessageToChat(sender, message) {
 }
 
 function fetchResponse(userMessage) {
-    fetch('/chat', { // Adjusted to root since it's the same domain
+    fetch('/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -29,9 +29,14 @@ function fetchResponse(userMessage) {
     })
     .then(response => response.json())
     .then(data => {
-        addMessageToChat('Tom Riddle', data.response);
+        if (data.response) {
+            addMessageToChat('Tom Riddle', data.response);
+        } else {
+            addMessageToChat('Tom Riddle', 'Error: Response not received.');
+        }
     })
     .catch(error => {
         console.error('Error:', error);
+        addMessageToChat('Tom Riddle', 'Error: Unable to fetch response.');
     });
 }
