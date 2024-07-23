@@ -1,3 +1,6 @@
+const port = 3002
+const baseUrl = `http://localhost:${port}`
+
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -20,7 +23,8 @@ function addMessageToChat(sender, message) {
 }
 
 function fetchResponse(userMessage) {
-    fetch('/chat', {
+    
+    fetch(`${baseUrl}/chat`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
