@@ -2,9 +2,9 @@
     "name": "tom-riddle-diary-backend",
     "version": "1.0.0",
     "description": "Backend for Tom Riddle's Diary",
-    "main": "backend/server.js",
+    "main": "server.js",
     "scripts": {
-      "start": "node /backend/server.js"
+      "start": "node server.js"
     },
     "dependencies": {
       "body-parser": "^1.19.0",
