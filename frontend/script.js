@@ -1,13 +1,12 @@
-const port = 3002
-const baseUrl = `http://localhost:${port}`
+const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:3002' : 'https://your-production-url.com';
 
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const messageInput = document.getElementById('message-input');
-    const message = messageInput.value;
+    const message = messageInput.value.trim();
 
-    if (message.trim() !== '') {
+    if (message !== '') {
         addMessageToChat('You', message);
         messageInput.value = '';
         fetchResponse(message);
