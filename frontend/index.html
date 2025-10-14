@@ -6,17 +6,37 @@
     <title>Tom Riddle's Diary</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="diary">
-        <h1>Tom Riddle's Diary</h1>
-        <div id="chat-window">
-            <div id="messages"></div>
+<body class="diary-body intro-active">
+    <div id="book-intro" class="book-intro" aria-hidden="true">
+        <div class="book-backdrop"></div>
+        <div class="book-wrapper">
+            <div class="book">
+                <div class="book-cover">
+                    <div class="book-cover-border"></div>
+                    <div class="book-title-crest">Tom Marvolo Riddle</div>
+                    <div class="book-sigil"></div>
+                </div>
+                <div class="book-page">
+                    <div class="page-glow"></div>
+                    <div class="page-runes"></div>
+                </div>
+            </div>
         </div>
-        <form id="chat-form">
-            <input type="text" id="message-input" placeholder="Type your message here..." required>
-            <button type="submit">Send</button>
-        </form>
+        <div class="book-whisper">Touch nothing but the diary</div>
+        <div class="intro-motes" aria-hidden="true"></div>
     </div>
+    <div class="particle-field" aria-hidden="true"></div>
+    <main class="diary-shell" role="main">
+        <div class="diary-cover">
+            <div class="diary-title">Tom Riddle's Diary</div>
+            <section id="ink-surface" class="ink-surface" aria-live="polite"></section>
+            <form id="diary-form" autocomplete="off">
+                <label class="visually-hidden" for="ink-input">Whisper to the diary</label>
+                <textarea id="ink-input" rows="1" placeholder="Whisper your secrets..." spellcheck="false"></textarea>
+                <div class="quill-glow" aria-hidden="true"></div>
+            </form>
+        </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
