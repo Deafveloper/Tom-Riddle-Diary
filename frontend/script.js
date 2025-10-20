@@ -6,13 +6,12 @@ const surface = document.getElementById('ink-surface');
 
 const USER_FADE_MS = 2600;
 const RESPONSE_DELAY_RANGE = [900, 1400];
-const INTRO_OPEN_DELAY = 450;
-const INTRO_FADE_DELAY = 3900;
+const COVER_ANIMATION_DURATION = 3300;
+const INTRO_REVEAL_OFFSET = COVER_ANIMATION_DURATION - 240;
 const INTRO_FADE_DURATION = 1100;
 
 let introSettled = false;
-let introTimers = [];
-let introKeyHandler = null;
+const activeTypeIntervals = new Set();
 
 const responseTable = [
     {
@@ -74,94 +73,83 @@ const secretResponses = [
 
 let secretUnlocked = false;
 let audioContext;
+let diaryOpenTimer = null;
+const DIARY_OPEN_DELAY = 520;
+
+function triggerDiaryOpen(delay = DIARY_OPEN_DELAY) {
+    if (body.classList.contains('diary-open')) {
+        return;
+    }
+    if (diaryOpenTimer) {
+        window.clearTimeout(diaryOpenTimer);
+    }
+    diaryOpenTimer = window.setTimeout(() => {
+        body.classList.add('diary-open');
+        diaryOpenTimer = null;
+    }, delay);
+}
 
 function initializeIntro() {
     if (!bookIntro) {
         body.classList.remove('intro-active');
+        triggerDiaryOpen(180);
         return;
     }
 
-    const begin = () => {
-        if (introSettled) {
-            return;
-        }
+    const cover = bookIntro.querySelector('.book-cover');
+    const engageIntro = () => settleIntro();
 
-        scheduleIntroTimeout(() => {
-            if (!bookIntro || introSettled) {
+    if (cover) {
+        cover.addEventListener('click', engageIntro);
+        cover.addEventListener('keydown', (event) => {
+            if (introSettled) {
                 return;
             }
-            bookIntro.classList.add('open');
-            playBookCreak();
-        }, INTRO_OPEN_DELAY);
-
-        scheduleIntroTimeout(() => {
-            settleIntro();
-        }, INTRO_FADE_DELAY);
-    };
-
-    if (document.readyState === 'complete') {
-        begin();
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                settleIntro();
+            }
+        });
     } else {
-        window.addEventListener('load', begin, { once: true });
+        bookIntro.addEventListener('click', engageIntro);
     }
-
-    bookIntro.addEventListener('pointerdown', () => settleIntro({ skip: true }));
-    introKeyHandler = (event) => {
-        if (introSettled) {
-            return;
-        }
-        if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
-            event.preventDefault();
-            settleIntro({ skip: true });
-        }
-    };
-    window.addEventListener('keydown', introKeyHandler);
 }
 
-function scheduleIntroTimeout(callback, delay) {
-    const id = window.setTimeout(callback, delay);
-    introTimers.push(id);
-    return id;
-}
-
-function clearIntroTimers() {
-    introTimers.forEach((id) => window.clearTimeout(id));
-    introTimers = [];
-}
-
-function settleIntro(options = {}) {
+function settleIntro() {
     if (introSettled) {
         return;
     }
     introSettled = true;
 
-    clearIntroTimers();
+    if (!bookIntro) {
+        body.classList.remove('intro-active');
+        triggerDiaryOpen(220);
+        return;
+    }
 
-    if (bookIntro) {
-        if (!bookIntro.classList.contains('open')) {
-            bookIntro.classList.add('open');
-            if (options.skip) {
-                playBookCreak();
-            }
+    bookIntro.classList.add('open');
+    bookIntro.style.pointerEvents = 'none';
+    playBookCreak();
+
+    window.setTimeout(() => {
+        bookIntro?.classList.add('fade-out');
+        bookIntro?.setAttribute('aria-hidden', 'true');
+        const openDelay = Math.max(0, COVER_ANIMATION_DURATION - INTRO_REVEAL_OFFSET);
+        triggerDiaryOpen(openDelay);
+        if (openDelay <= 0) {
+            body.classList.remove('intro-active');
+        } else {
+            window.setTimeout(() => {
+                body.classList.remove('intro-active');
+            }, openDelay);
         }
-
-        window.requestAnimationFrame(() => {
-            bookIntro.classList.add('fade-out');
-        });
-    }
-
-    body.classList.remove('intro-active');
-
-    if (introKeyHandler) {
-        window.removeEventListener('keydown', introKeyHandler);
-        introKeyHandler = null;
-    }
+    }, INTRO_REVEAL_OFFSET);
 
     window.setTimeout(() => {
         if (bookIntro && bookIntro.parentElement) {
             bookIntro.remove();
         }
-    }, INTRO_FADE_DURATION);
+    }, INTRO_REVEAL_OFFSET + INTRO_FADE_DURATION);
 }
 
 initializeIntro();
@@ -184,6 +172,7 @@ function handleSubmit(event) {
         return;
     }
 
+    clearRiddleInk();
     input.value = '';
     revealUserInk(whispered);
 
@@ -281,9 +270,11 @@ function typeRiddleReply(text, isSecret) {
 
         if (charIndex >= characters.length) {
             window.clearInterval(typeInterval);
+            activeTypeIntervals.delete(typeInterval);
             caret.remove();
         }
     }, randomBetween(38, 75));
+    activeTypeIntervals.add(typeInterval);
 }
 
 function randomBetween(min, max) {
@@ -416,4 +407,24 @@ function playWhisper() {
 
     source.start();
     source.stop(ctx.currentTime + duration);
+}
+
+function clearRiddleInk() {
+    stopActiveTyping();
+    const riddleEntries = surface?.querySelectorAll('.entry.riddle-ink') ?? [];
+    riddleEntries.forEach((entry) => {
+        entry.classList.add('vanish');
+        const caret = entry.querySelector('.caret');
+        if (caret) {
+            caret.remove();
+        }
+        entry.addEventListener('animationend', () => {
+            entry.remove();
+        }, { once: true });
+    });
+}
+
+function stopActiveTyping() {
+    activeTypeIntervals.forEach((id) => window.clearInterval(id));
+    activeTypeIntervals.clear();
 }

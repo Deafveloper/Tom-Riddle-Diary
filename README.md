@@ -15,12 +15,30 @@ Cool? Definitely!
 - **Memory Retention:** Like a true Horcrux, the diary remembers your past interactions.
 - **Magical Interface:** Open the diary with a click and get lost in its cursed pages.
 
-## Getting Started:
-### Coming Soon
-![Coming Soon](https://media.giphy.com/media/p1bCWIZsQUWzU2vp9k/giphy.gif?cid=ecf05e474e4277ft97kuekqgwy7ahcjchnsi54ncdjg44j6m&ep=v1_gifs_search&rid=giphy.gif&ct=g)
+## Getting Started
+### Run the Diary Locally
+1. Open a terminal in the project and step into the frontend:  
+   ```bash
+   cd frontend
+   ```
+2. Launch a lightweight static server (pick any of these):
+   ```bash
+   npx serve .
+   # or
+   python3 -m http.server 3000
+   # or
+   npx http-server .
+   ```
+3. Visit the printed `http://localhost` address to watch the cursed book open and start chatting.
+
+> Tip: Browsers may require a click before playing the creaking-book and whisper audio. Tap anywhere on the page if you don’t hear them immediately.
+
+### Use Your Own Cover Art
+1. Drop your image file inside `frontend/assets/` (for example `frontend/assets/diary-cover.png`).
+2. Keep the file name `diary-cover.png` (or change both the file name and the path inside `frontend/style.css` under `.book-cover { background: ... }`).
+3. Restart your local server or refresh the page—your custom cover will appear on the intro book.
 
 ## Contributions:
 Have ideas to make this diary even more enchanting?  
 Pull requests and suggestions are always welcome.  
 Just be careful not to awaken any hidden curses!
-

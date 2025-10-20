@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="diary-body intro-active">
-    <div id="book-intro" class="book-intro" aria-hidden="true">
+    <div id="book-intro" class="book-intro">
         <div class="book-backdrop"></div>
         <div class="book-wrapper">
             <div class="book">
-                <div class="book-cover">
-                    <div class="book-cover-border"></div>
-                    <div class="book-title-crest">Tom Marvolo Riddle</div>
-                    <div class="book-sigil"></div>
+                <div class="book-cover" role="button" tabindex="0" aria-label="Open Tom Riddle's diary">
+                    <img class="book-cover-image" src="assets/diary-cover.png" alt="Tom Riddle's diary cover">
+                    <div class="book-cover-glow" aria-hidden="true"></div>
+                    <span class="visually-hidden">Tap or press enter to open the diary and reveal the conversation.</span>
                 </div>
                 <div class="book-page">
                     <div class="page-glow"></div>
@@ -22,19 +22,20 @@
                 </div>
             </div>
         </div>
-        <div class="book-whisper">Touch nothing but the diary</div>
         <div class="intro-motes" aria-hidden="true"></div>
     </div>
     <div class="particle-field" aria-hidden="true"></div>
     <main class="diary-shell" role="main">
         <div class="diary-cover">
-            <div class="diary-title">Tom Riddle's Diary</div>
-            <section id="ink-surface" class="ink-surface" aria-live="polite"></section>
-            <form id="diary-form" autocomplete="off">
-                <label class="visually-hidden" for="ink-input">Whisper to the diary</label>
-                <textarea id="ink-input" rows="1" placeholder="Whisper your secrets..." spellcheck="false"></textarea>
-                <div class="quill-glow" aria-hidden="true"></div>
-            </form>
+            <div class="diary-page">
+                <div class="diary-title">Tom Riddle's Diary</div>
+                <section id="ink-surface" class="ink-surface" aria-live="polite"></section>
+                <form id="diary-form" autocomplete="off">
+                    <label class="visually-hidden" for="ink-input">Whisper to the diary</label>
+                    <textarea id="ink-input" rows="1" placeholder="Whisper your secrets..." spellcheck="false"></textarea>
+                    <div class="quill-glow" aria-hidden="true"></div>
+                </form>
+            </div>
         </div>
     </main>
     <script src="script.js"></script>
